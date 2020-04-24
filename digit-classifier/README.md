@@ -30,6 +30,8 @@ This doesn't need to be too complicated. I was thinking you make this with PyGam
 - [ ] A button to run the model on the number that the user drew.
 - [ ] We want this to return an 28x28 array of greyscale pixel values. **This doesn't have to be sorted out immediately, we'll probably sort this out at the end.**
 
+This seems like a useful resource on how to let the user draw with their mouse: https://github.com/MiniGirlGeek/pygame-paintme
+
 ### What the model training needs to do:
 - [x] Gather the MNIST handwritten digits dataset.
 - [x] Split the dataset up into training and test sets.
