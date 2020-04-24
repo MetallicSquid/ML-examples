@@ -1,3 +1,5 @@
+# Evaluate the accuracy of the model's predictions
+
 # Import the `build_model` function from `build_model.py`
 from build_model import build_model
 import tensorflow as tf

@@ -4,7 +4,6 @@
 import tensorflow as tf
 from tensorflow import keras
 import numpy as np
-import matplotlib.pyplot as plt
 
 from keras.datasets import mnist
 def build_model(epochs=10):
