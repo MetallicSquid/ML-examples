@@ -24,9 +24,9 @@ This doesn't need to be too complicated. I was thinking you make this with PyGam
 - [ ] We want this to return an 28x28 array of greyscale pixel values. **This doesn't have to be sorted out immediately, we'll probably sort this out at the end.**
 
 ### What the model training needs to do:
-- [ ] Gather the MNIST handwritten digits dataset.
-- [ ] Split the dataset up into training and test sets.
-- [ ] Build a model on the prepared training dataset.
+- [x] Gather the MNIST handwritten digits dataset.
+- [x] Split the dataset up into training and test sets.
+- [x] Build a model on the prepared training dataset.
 
 ### What the accuracy evaluation needs to have.
 - [ ] Test the model on the remaining test dataset.
