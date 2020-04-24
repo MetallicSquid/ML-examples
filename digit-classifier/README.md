@@ -40,6 +40,4 @@ This doesn't need to be too complicated. I was thinking you make this with PyGam
 
 ## Notes:
 
-The dataset prep was so easy that I'll probably merge it with the `train_model.py` script.
-
-I have merged it, it is now called `build_model.py`.
+If you want to run the model and test it, download the necessary libraries and run `evaluate_accuracy.py`.
