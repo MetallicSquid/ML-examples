@@ -26,7 +26,7 @@ This doesn't need to be too complicated. I was thinking you make this with PyGam
 ### What the model training needs to do:
 - [x] Gather the MNIST handwritten digits dataset.
 - [x] Split the dataset up into training and test sets.
-- [x] Build a model on the prepared training dataset.
+- [ ] Build a model on the prepared training dataset.
 
 ### What the accuracy evaluation needs to have.
 - [ ] Test the model on the remaining test dataset.
