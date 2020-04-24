@@ -9,6 +9,13 @@ I think we should split the program into a few modules:
 * digit_ui.py		-	module for the user to draw a digit into.
 
 We can then call these modules to get the final program working. We could put it all in one `.py` file, but I think it's nicer this way.
+## Necessary libraries to download (download with pip install _____):
+* keras
+* matplotlib
+* numpy
+* tensorflow
+* pygame
+
 
 ## Suggested order of things to do:
 This is only suggested, so you can do what you want really
@@ -26,10 +33,10 @@ This doesn't need to be too complicated. I was thinking you make this with PyGam
 ### What the model training needs to do:
 - [x] Gather the MNIST handwritten digits dataset.
 - [x] Split the dataset up into training and test sets.
-- [ ] Build a model on the prepared training dataset.
+- [x] Build a model on the prepared training dataset.
 
 ### What the accuracy evaluation needs to have.
-- [ ] Test the model on the remaining test dataset.
+- [x] Test the model on the remaining test dataset.
 
 ## Notes:
 
