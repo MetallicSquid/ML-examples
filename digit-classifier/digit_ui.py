@@ -43,7 +43,6 @@ def run_model():
     y1=y+c.winfo_height()
     digit = ImageGrab.grab().crop((x,y,x1,y1)).convert('L')
     digit = ImageOps.invert(digit)
-    digit.show()
     digit.thumbnail((28,28), Image.ANTIALIAS)
     digitArray = np.array(digit).reshape(1, 28, 28) / 255.0
     prediction_array = prob_model.predict(digitArray)
