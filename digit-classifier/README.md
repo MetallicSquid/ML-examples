@@ -1,45 +1,24 @@
-# This directory is where we are going to put the classifier.
+# Hand-written digit classifier
+This is a neural network that is trained to classify hand-written digits from the user. It has a UI made with Tkinter and is trained on the MNIST hand-written digits dataset
 
-I'm thinking that we should write a basic neural network and train it on the MNIST handwritten digits dataset. I was also thinking it could be cool if we made a UI for the user to draw a digit on and it will
-
-I think we should split the program into a few modules:
-
-* build_model.py	-	module to gather the dataset and train the model on the training set.
-* evaluate_accuracy.py	-	module to test the accuracy of the model on the test set.
-* digit_ui.py		-	module for the user to draw a digit into.
-
-We can then call these modules to get the final program working. We could put it all in one `.py` file, but I think it's nicer this way.
-## Necessary libraries to download (download with pip install _____):
+## Necessary libraries to download (download with pip install _____)
 * keras
 * matplotlib
 * numpy
 * tensorflow
-* pygame
+* tkinter
+* pillow
 
+## Usage
+To evaluate the model's accuracy against digits from the MNIST hand-written digits dataset, run `evaluate_accuracy.py`. You will see the model train itself and will then be presented with the image and a graph representing which number the model think is present. To move to the next image, press 'q'. This cycle will happen 25 times.
 
-## Suggested order of things to do:
-This is only suggested, so you can do what you want really
-1. Ariel              	-   digit_ui.py
-3. Guillaume		-   build_model.py
-4. Guillaume / Ariel  	-   evaluate_accuracy.py
+To test the model on digits that you write, run `digit_ui.py`. You will see the model train itself and will then be presented with a small, white canvas on which you can draw your digit. Draw the digit and then press 'run model', you will see the predicted number appear (**This is currently in the terminal window**). If you want to clear the canvas, press 'clear screen'. If you want to quit, press 'quit'.
 
-### What the UI needs to have:
-This doesn't need to be too complicated. I was thinking you make this with PyGame. All it needs is:
-- [ ] A 28x28 pixel, black and white canvas which the user can draw a number on.
-- [ ] A button to clear the canvas.
-- [ ] A button to run the model on the number that the user drew.
-- [ ] We want this to return an 28x28 array of greyscale pixel values. **This doesn't have to be sorted out immediately, we'll probably sort this out at the end.**
+## Examples:
 
-This seems like a useful resource on how to let the user draw with their mouse: https://github.com/MiniGirlGeek/pygame-paintme
+**This is where we will put example pictures once we are done.**
 
-### What the model training needs to do:
-- [x] Gather the MNIST handwritten digits dataset.
-- [x] Split the dataset up into training and test sets.
-- [x] Build a model on the prepared training dataset.
-
-### What the accuracy evaluation needs to have.
-- [x] Test the model on the remaining test dataset.
-
-## Notes:
-
-If you want to run the model and test it, download the necessary libraries and run `evaluate_accuracy.py`.
+# TODO:
+ -[ ] Attach the predicted label to the tkinter window somewhere.
+ -[ ] Take pictures of the program in action
+ -[ ] Move onto the next project
