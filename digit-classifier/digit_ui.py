@@ -1,12 +1,13 @@
-from build_model import build_model
+#from build_model import build_model # <--- basic model
+from build_cnn import build_model # <--- cnn model
 import tkinter
 from tkinter import *
 from PIL import ImageTk, Image, ImageOps
 from _ast import Lambda
 import math
 from math import pow
-from PIL import ImageGrab # <--- For MacOS and Windows
-#import pyscreenshot as ImageGrab # <--- For linux
+#from PIL import ImageGrab # <--- For MacOS and Windows
+import pyscreenshot as ImageGrab # <--- For linux
 import numpy as np
 
 prob_model = build_model()[2]
@@ -44,7 +45,8 @@ def run_model():
     digit = ImageGrab.grab().crop((x,y,x1,y1)).convert('L')
     digit = ImageOps.invert(digit)
     digit.thumbnail((28,28), Image.ANTIALIAS)
-    digitArray = np.array(digit).reshape(1, 28, 28) / 255.0
+    #digitArray = np.array(digit).reshape(1, 28, 28) / 255.0 # <--- basic model
+    digitArray = np.array(digit).reshape(1, 28, 28, 1) / 255.0 # <--- cnn model
     prediction_array = prob_model.predict(digitArray)
     predicted_label = class_names[np.argmax(prediction_array)]
     print(predicted_label)
