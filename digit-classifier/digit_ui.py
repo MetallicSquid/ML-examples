@@ -34,6 +34,7 @@ e = Entry( root, width=10)
 e.pack(side=TOP)
 
 def clear_screen():
+    e.delete(0, 'end')
     c.delete('all')
 
 def quit_window():
@@ -52,7 +53,7 @@ def run_model():
     digitArray = np.array(digit).reshape(1, 28, 28, 1) / 255.0 # <--- cnn model
     prediction_array = prob_model.predict(digitArray)
     predicted_label = class_names[np.argmax(prediction_array)]
-    print(predicted_label)
+    e.delete(0, 'end')
     e.insert(0,predicted_label)
 
 
