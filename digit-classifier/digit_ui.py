@@ -30,6 +30,8 @@ c = Canvas(root, width=canvas_width, height=canvas_height,
            bg='white')
 c.pack(expand=YES, fill=BOTH)
 c.bind('<B1-Motion>', paint )
+e = Entry( root, width=10)
+e.pack(side=TOP)
 
 def clear_screen():
     c.delete('all')
@@ -38,6 +40,7 @@ def quit_window():
     root.destroy()
 
 def run_model():
+    global predicted_label
     x=root.winfo_rootx()+c.winfo_x()
     y=root.winfo_rooty()+c.winfo_y()
     x1=x+c.winfo_width()
@@ -50,6 +53,8 @@ def run_model():
     prediction_array = prob_model.predict(digitArray)
     predicted_label = class_names[np.argmax(prediction_array)]
     print(predicted_label)
+    e.insert(0,predicted_label)
+
 
 clear = Button(root, text="clear screen", command=clear_screen)
 clear.pack(side=RIGHT)
