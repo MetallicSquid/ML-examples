@@ -16,7 +16,7 @@ To test the model on digits that you write, run `digit_ui.py`. You will see the 
 
 ## Examples:
 
-**This is where we will put example pictures once we are done.**
+![Examples](numbers.png)
 
 # TODO:
  - [ ] Attach the predicted label to the tkinter window somewhere.
