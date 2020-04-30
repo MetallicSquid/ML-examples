@@ -10,7 +10,7 @@ from math import pow
 import pyscreenshot as ImageGrab # <--- For linux
 import numpy as np
 
-prob_model = build_model()[2]
+prob_model = build_model(5)[2]
 
 class_names = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']
 
