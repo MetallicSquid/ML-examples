@@ -1,4 +1,4 @@
-#Snake game with camera controls
+# Snake game with camera controls
 
 Ariel's project.
 
