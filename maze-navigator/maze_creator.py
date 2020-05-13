@@ -3,6 +3,8 @@
 
 # Necessary imports
 import random
+from svg import Parser, Rasterizer, SVG
+from PIL import Image
 
 # A cell in the maze
 class Cell:
@@ -153,7 +155,5 @@ maze = Maze(nx, ny, ix, iy)
 maze.make_maze()
 
 print(maze)
+
 maze.write_svg('maze.svg')
-
-
-
