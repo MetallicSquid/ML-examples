@@ -86,8 +86,10 @@ show_frame()
 def add_image(dataset):
     image = cap.read()[1]
     image = cv2.flip(image, 1)
-    cv2image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    cv2image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    cv2image.resize((128, 128))
     dataset.append(cv2image)
+    print(cv2image.shape)
 
 # Rock
 rockDataset = []
