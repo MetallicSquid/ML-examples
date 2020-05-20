@@ -6,10 +6,7 @@ from tensorflow import keras
 
 def build_model(full_data, full_labels, epochs=10):
     # Load and split data
-    full_data = np.load('data.npy')
-    full_labels = np.load('labels.npy')
-
-    trainLen = round(len(fullData) * 0.8)
+    trainLen = round(len(full_data) * 0.8)
 
     trainData = full_data[:trainLen] / 255.0
     trainLabels = full_labels[:trainLen]
@@ -31,7 +28,7 @@ def build_model(full_data, full_labels, epochs=10):
             metrics=['accuracy'])
 
     # Train the model on the train dataset and print the accuracy and loss
-    model.fit(trainData, trainLabels, epochs=50)
+    model.fit(trainData, trainLabels, epochs=epochs)
     test_loss, test_acc = model.evaluate(testData, testLabels, verbose=2)
 
     print('\nTest accuracy: ',  test_acc, '\nTest loss:', test_loss)
@@ -41,4 +38,5 @@ def build_model(full_data, full_labels, epochs=10):
         tf.keras.layers.Softmax()])
 
     # Return the model as the output of the `build_model` function
-    return [testData, testLabels, prob_model]
+    return [testData, testLabels, prob_model, test_acc, test_loss]
+

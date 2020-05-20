@@ -2,12 +2,16 @@
 # Gather data #
 ###############
 
+# Almost finished, just make the game playable
+
 # Imports
 import numpy as np
 import tkinter as tk
 import cv2
 from PIL import ImageTk, Image
 from random import randint
+from build_model import build_model
+from time import sleep
 
 # Window setup
 root = tk.Tk()
@@ -37,8 +41,9 @@ def compile_dataset():
     newDataset = rockDataset + paperDataset + scissorsDataset
     newLabels = rockLabels + paperLabels + scissorsLabels
     if len(fullDataset) == len(newDataset):
-        print("Already compiled")
+        progressText.set("Already Compiled")
     else:
+        progressText.set("")
         # Shuffle the data
         for element in range(len(newDataset)):
             randIndex = randint(0, element)
@@ -50,15 +55,11 @@ def compile_dataset():
         fullDataset = np.asarray(newDataset)
         fullLabels = np.asarray(newLabels)
 
-        print(fullDataset)
-        print(fullLabels)
-
-        # TEMP
-        np.save('data.npy', fullDataset)
-        np.save('labels.npy', fullLabels)
-
-
 # Progress button
+progressText = tk.StringVar()
+progressText.set("")
+progressLabel = tk.Label(root, textvariable=progressText)
+progressLabel.grid(row=2, column=3)
 progress = tk.Button(root, text="compile dataset", command=compile_dataset)
 progress.grid(row=3, column=3)
 progress.config(state="disabled")
@@ -75,6 +76,24 @@ cap = cv2.VideoCapture(0)
 def show_frame():
     frame = cap.read()[1]
     frame = cv2.flip(frame, 1)
+
+    # Superpose a 128x128 rectangle in the middle of the frame
+    midHeight = round(frame.shape[0]/2)
+    midWidth = round(frame.shape[1]/2)
+    x1 = midWidth - 128
+    y1 = midHeight - 128
+    x2 = midWidth + 128
+    y2 = midHeight + 128
+    cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 255), 3)
+
+    # Put explanation text on the image
+    font = cv2.FONT_HERSHEY_SIMPLEX
+    text = 'Keep Gesture Within Box'
+    textSize = cv2.getTextSize(text, font, 1, 2)[0]
+    xt = midWidth - round(textSize[0]/2)
+    cv2.putText(frame, text, (xt, 50), font, 1, (0, 0, 255), 2)
+
+    # Display image and repeat
     cv2image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA)
     img = Image.fromarray(cv2image)
     imgtk = ImageTk.PhotoImage(image=img)
@@ -86,10 +105,19 @@ show_frame()
 def add_image(dataset):
     image = cap.read()[1]
     image = cv2.flip(image, 1)
-    cv2image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-    cv2image.resize((128, 128))
+
+    # Capture the image within the box
+    midHeight = round(image.shape[0]/2)
+    midWidth = round(image.shape[1]/2)
+    x1 = midWidth - 128
+    y1 = midHeight - 128
+    x2 = midWidth + 128
+    y2 = midHeight + 128
+    image = image[y1:y2, x1:x2]
+
+    # Convert and add image to the dataset
+    cv2image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     dataset.append(cv2image)
-    print(cv2image.shape)
 
 # Rock
 rockDataset = []
@@ -145,6 +173,7 @@ def input_scissors():
 scissors = tk.Button(root, text="scissors", command=input_scissors)
 scissors.grid(row=3, column=2)
 
+# Horizontal line
 hLine = tk.Frame(root, height=1, width=600, bg="black")
 hLine.grid(row=4, column=0, columnspan=4)
 
@@ -152,6 +181,62 @@ hLine.grid(row=4, column=0, columnspan=4)
 # Run model #
 #############
 
+# Build the model when button is pressed
+probModel= None
+accuracy = ""
+loss = ""
 
+def run_model(data, labels, epochs):
+    modelList = build_model(data, labels, epochs)
+    # NB: the use of global variables here is unfortunate but hard to avoid
+    global probModel
+    global accuracy
+    global loss
+    probModel = modelList[2]
+    accuracy = ("Accuracy: " + str(round(modelList[3], 2)))
+    loss = ("Loss: " + str(round(modelList[4], 2)))
+    accText.set(accuracy)
+    lossText.set(loss)
+    buildText.set("Model built")
+
+build = tk.Button(root, text="build", command=lambda: run_model(fullDataset, fullLabels, 30))
+build.grid(row=5, column=0)
+buildText = tk.StringVar()
+buildText.set("")
+buildLabel = tk.Label(root, textvariable=buildText)
+buildLabel.grid(row=6, column=0)
+accText = tk.StringVar()
+accText.set("")
+accLabel = tk.Label(root, textvariable=accText)
+accLabel.grid(row=7, column=0)
+lossText = tk.StringVar()
+lossText.set("")
+lossLabel = tk.Label(root, textvariable=lossText)
+lossLabel.grid(row=8, column=0)
+
+# Vertical line
+vLine = tk.Frame(root, height=200, width=1, bg="black")
+vLine.grid(row=5, column=1, rowspan=4)
+
+# Play a game
+def play_round():
+    dataset = []
+    for i in range(1, 4):
+        sleep(1)
+        print((4-i))
+    add_image(dataset)
+    dataset = np.asarray(dataset)
+    print(dataset.shape)
+    prediction = probModel.predict(np.asarray(dataset)[0])
+    print(prediction)
+    if prediction == 0:
+        print("Rock")
+    elif prediction == 1:
+        print("Paper")
+    elif prediction == 2:
+        print("Scissors")
+    compChoice = randint(0, 2)
+play = tk.Button(root, text="Play", command=play_round)
+play.grid(row=5, column=2)
 
 root.mainloop()
