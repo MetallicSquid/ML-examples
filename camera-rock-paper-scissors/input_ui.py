@@ -219,24 +219,73 @@ vLine = tk.Frame(root, height=200, width=1, bg="black")
 vLine.grid(row=5, column=1, rowspan=4)
 
 # Play a game
+def cap_image():
+    image = cap.read()[1]
+    image = cv2.flip(image, 1)
+
+    # Capture the image within the box
+    midHeight = round(image.shape[0]/2)
+    midWidth = round(image.shape[1]/2)
+    x1 = midWidth - 128
+    y1 = midHeight - 128
+    x2 = midWidth + 128
+    y2 = midHeight + 128
+    image = image[y1:y2, x1:x2]
+
+    # Convert and add image to the dataset
+    cv2image = np.asarray(cv2.cvtColor(image, cv2.COLOR_BGR2GRAY))/255.0
+    cv2image = cv2image.reshape(1, 256, 256)
+    return cv2image
+
+playerScore = 0
+computerScore = 0
+verdict = ""
+
 def play_round():
-    dataset = []
-    for i in range(1, 4):
-        sleep(1)
-        print((4-i))
-    add_image(dataset)
-    dataset = np.asarray(dataset)
-    print(dataset.shape)
-    prediction = probModel.predict(np.asarray(dataset)[0])
-    print(prediction)
-    if prediction == 0:
-        print("Rock")
-    elif prediction == 1:
-        print("Paper")
-    elif prediction == 2:
-        print("Scissors")
-    compChoice = randint(0, 2)
+    # NB: the use of global variables is unfortunate, but difficult to avoid
+    global playerScore
+    global computerScore
+    global verdict
+
+    prediction = np.argmax(probModel.predict(cap_image()))
+    optionList = ['rock', 'paper', 'scissors']
+    textPrediction = optionList[prediction]
+    pcText.set(textPrediction)
+    computer = randint(0, 2)
+    computerChoice = optionList[computer]
+    ccText.set(computerChoice)
+
+    # Decide who wins:
+    if computer == (prediction+1) or computer == (prediction-2):
+        computerScore += 1
+        verdict = "Computer wins"
+    elif computer == (prediction-1) or computer == (prediction+2):
+        playerScore += 1
+        verdict = "Player wins"
+    else:
+        verdict = "Draw"
+    playerString = "Player score: " + str(playerScore)
+    psText.set(playerString)
+    computerString = "Computer score: " + str(computerScore)
+    csText.set(computerString)
+    verdictText.set(verdict)
+
 play = tk.Button(root, text="Play", command=play_round)
 play.grid(row=5, column=2)
+psText = tk.StringVar()
+psLabel = tk.Label(root, textvariable=psText)
+psLabel.grid(row=6, column=2)
+csText = tk.StringVar()
+csLabel = tk.Label(root, textvariable=csText)
+csLabel.grid(row=7, column=2)
+pcText = tk.StringVar()
+pcLabel = tk.Label(root, textvariable=pcText)
+pcLabel.grid(row=6, column=3)
+ccText = tk.StringVar()
+ccLabel = tk.Label(root, textvariable=ccText)
+ccLabel.grid(row=7, column=3)
+verdictText = tk.StringVar()
+verdictLabel = tk.Label(root, textvariable=verdictText)
+verdictLabel.grid(row=8, column=2, columnspan=2)
 
 root.mainloop()
