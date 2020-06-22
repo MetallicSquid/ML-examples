@@ -21,7 +21,7 @@ root.grid_rowconfigure(4, pad=10)
 
 # Guidance message
 message = tk.Label(root, text="Enter at least 20 samples of each gesture. There must be an equal number of samples.")
-message.grid(row=0, column=0, columnspan=3)
+message.grid(row=0, column=0)
 
 # Quit
 def quit_window():
@@ -61,12 +61,13 @@ progressText.set("")
 progressLabel = tk.Label(root, textvariable=progressText)
 progressLabel.grid(row=2, column=3)
 progress = tk.Button(root, text="compile dataset", command=compile_dataset)
-progress.grid(row=3, column=3)
+progress.grid(row=3, column=1, columnspan=3)
 progress.config(state="disabled")
 
 # Graphics window
 imageFrame = tk.Frame(root, width=600, height=500)
-imageFrame.grid(row=1, column=0, columnspan=4, padx=10, pady=2)
+#imageFrame.grid(row=1, column=0, columnspan=4, padx=10, pady=2)
+imageFrame.grid(row=1, rowspan=5,column=0, padx=10, pady=2)
 
 # Capture video frames
 lmain = tk.Label(imageFrame)
@@ -125,7 +126,8 @@ rockLabels = []
 rockText = tk.StringVar()
 rockText.set("0")
 rockLabel = tk.Label(root, textvariable=rockText)
-rockLabel.grid(row=2, column=0)
+#rockLabel.grid(row=2, column=0)
+rockLabel.grid(row=1, column=1)
 def input_rock():
     add_image(rockDataset)
     rockLabels.append(0)
@@ -135,7 +137,8 @@ def input_rock():
     else:
         progress.config(state="disabled")
 rock = tk.Button(root, text="rock", command=input_rock)
-rock.grid(row=3, column=0)
+#rock.grid(row=3, column=0)
+rock.grid(row=2, column=1)
 
 # Paper
 paperDataset = []
@@ -143,7 +146,8 @@ paperLabels = []
 paperText = tk.StringVar()
 paperText.set("0")
 paperLabel = tk.Label(root, textvariable=paperText)
-paperLabel.grid(row=2, column=1)
+#paperLabel.grid(row=2, column=1)
+paperLabel.grid(row=1, column=2)
 def input_paper():
     add_image(paperDataset)
     paperLabels.append(1)
@@ -153,7 +157,8 @@ def input_paper():
     else:
         progress.config(state="disabled")
 paper = tk.Button(root, text="paper", command=input_paper)
-paper.grid(row=3, column=1)
+#paper.grid(row=3, column=1)
+paper.grid(row=2, column=2)
 
 # Scissors
 scissorsDataset = []
@@ -161,7 +166,8 @@ scissorsLabels = []
 scissorsText = tk.StringVar()
 scissorsText.set("0")
 scissorsLabel = tk.Label(root, textvariable=scissorsText)
-scissorsLabel.grid(row=2, column=2)
+#scissorsLabel.grid(row=2, column=2)
+scissorsLabel.grid(row=1, column=3)
 def input_scissors():
     add_image(scissorsDataset)
     scissorsLabels.append(2)
@@ -171,11 +177,16 @@ def input_scissors():
     else:
         progress.config(state="disabled")
 scissors = tk.Button(root, text="scissors", command=input_scissors)
-scissors.grid(row=3, column=2)
+#scissors.grid(row=3, column=2)
+scissors.grid(row=2, column=3)
 
 # Horizontal line
-hLine = tk.Frame(root, height=1, width=600, bg="black")
-hLine.grid(row=4, column=0, columnspan=4)
+#hLine = tk.Frame(root, height=1, width=600, bg="black")
+#hLine.grid(row=4, column=0, columnspan=4)
+
+# Vertical line
+vLine1 = tk.Frame(root, height=500, width=1, bg="black")
+vLine1.grid(row=1, column=4, rowspan=4, columnspan=2)
 
 #############
 # Run model #
@@ -200,23 +211,27 @@ def run_model(data, labels, epochs):
     buildText.set("Model built")
 
 build = tk.Button(root, text="build", command=lambda: run_model(fullDataset, fullLabels, 30))
-build.grid(row=5, column=0)
+#build.grid(row=5, column=0)
+build.grid(row=1, column=6)
 buildText = tk.StringVar()
 buildText.set("")
 buildLabel = tk.Label(root, textvariable=buildText)
-buildLabel.grid(row=6, column=0)
+#buildLabel.grid(row=6, column=0)
+buildLabel.grid(row=2, column=6)
 accText = tk.StringVar()
 accText.set("")
 accLabel = tk.Label(root, textvariable=accText)
-accLabel.grid(row=7, column=0)
+#accLabel.grid(row=7, column=0)
+accLabel.grid(row=3, column=6)
 lossText = tk.StringVar()
 lossText.set("")
 lossLabel = tk.Label(root, textvariable=lossText)
-lossLabel.grid(row=8, column=0)
+#lossLabel.grid(row=8, column=0)
+lossLabel.grid(row=4, column=6)
 
 # Vertical line
-vLine = tk.Frame(root, height=200, width=1, bg="black")
-vLine.grid(row=5, column=1, rowspan=4)
+vLine2 = tk.Frame(root, height=500, width=1, bg="black")
+vLine2.grid(row=1, column=7, rowspan=4)
 
 # Play a game
 def cap_image():
@@ -271,21 +286,21 @@ def play_round():
     verdictText.set(verdict)
 
 play = tk.Button(root, text="Play", command=play_round)
-play.grid(row=5, column=2)
+play.grid(row=1, column=8, columnspan=2)
 psText = tk.StringVar()
 psLabel = tk.Label(root, textvariable=psText)
-psLabel.grid(row=6, column=2)
+psLabel.grid(row=2, column=8)
 csText = tk.StringVar()
 csLabel = tk.Label(root, textvariable=csText)
-csLabel.grid(row=7, column=2)
+csLabel.grid(row=3, column=8)
 pcText = tk.StringVar()
 pcLabel = tk.Label(root, textvariable=pcText)
-pcLabel.grid(row=6, column=3)
+pcLabel.grid(row=2, column=9)
 ccText = tk.StringVar()
 ccLabel = tk.Label(root, textvariable=ccText)
-ccLabel.grid(row=7, column=3)
+ccLabel.grid(row=3, column=9)
 verdictText = tk.StringVar()
 verdictLabel = tk.Label(root, textvariable=verdictText)
-verdictLabel.grid(row=8, column=2, columnspan=2)
+verdictLabel.grid(row=4, column=8, columnspan=2)
 
 root.mainloop()
