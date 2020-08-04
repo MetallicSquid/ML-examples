@@ -26,4 +26,4 @@ In order to ensure best results:
 * Make sure that the conditions in which the training samples were taken are the same when you play the game. For example, make sure that the gestures you make for rock, paper and scissors are the same and make sure that the background is the same too.
 
 ## Examples:
-![Examples](ui_example.png)
+![Examples](rps_h_example.png)
