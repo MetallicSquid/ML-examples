@@ -1,6 +1,6 @@
 # ML-examples
 A repository of machine learning programs written in Python 3.
-More information about this project can be found [here](https://gcmacneil.com/ML-examples.html)
+More information about this project can be found [here](https://gcmacneil.com/ML-examples.html).
 
 ## [Hand-Written Digit Classifier](digit-classifier)
 ## [Camera Controlled Rock, Paper, Scissors Game](camera-rock-paper-scissors)
